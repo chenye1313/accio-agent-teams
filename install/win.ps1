@@ -15,13 +15,14 @@ switch ($Team) {
   default { throw "Unknown team key: $Team" }
 }
 
-if (-not $SourceRoot -or $SourceRoot.Trim().Length -eq 0) {
-  $TempDir = Join-Path ([System.IO.Path]::GetTempPath()) ("accio-agent-teams-" + [System.Guid]::NewGuid().ToString("N"))
+if (-not $SourceRoot) {
+  $TempName = "accio-agent-teams-" + (Get-Date -Format "yyyyMMddHHmmss") + "-" + (Get-Random)
+  $TempDir = Join-Path $env:TEMP $TempName
   New-Item -ItemType Directory -Path $TempDir -Force | Out-Null
   $Archive = Join-Path $TempDir "repo.zip"
   Invoke-WebRequest -Uri $RepoArchiveUrl -OutFile $Archive
   Expand-Archive -LiteralPath $Archive -DestinationPath $TempDir -Force
-  $SourceRoot = (Get-ChildItem -LiteralPath $TempDir -Directory | Select-Object -First 1).FullName
+  $SourceRoot = Get-ChildItem -LiteralPath $TempDir -Directory | Select-Object -First 1 -ExpandProperty FullName
 }
 
 $TeamSrc = Join-Path $SourceRoot "packages\$Team"
@@ -29,9 +30,9 @@ if (-not (Test-Path -LiteralPath $TeamSrc -PathType Container)) {
   throw "Team source not found: $TeamSrc"
 }
 
-if ($AccioTeamRoot -and $AccioTeamRoot.Trim().Length -gt 0) {
+if ($AccioTeamRoot) {
   $DestTeam = $AccioTeamRoot
-} elseif ($AccioAgentReadyRoot -and $AccioAgentReadyRoot.Trim().Length -gt 0) {
+} elseif ($AccioAgentReadyRoot) {
   $DestTeam = Join-Path $AccioAgentReadyRoot "Teams\$TeamName"
 } else {
   $DestTeam = Join-Path $env:USERPROFILE ".accio\agent-ready\Teams\$TeamName"
