@@ -36,6 +36,21 @@ write_default_file() {
   fi
 }
 
+clean_role_display_name() {
+  local team_code="$1"
+  local raw_name="$2"
+  local cleaned="$raw_name"
+
+  if [[ "$team_code" == "FTBP" ]]; then
+    cleaned="$(printf '%s' "$raw_name" | sed -E 's/^[A-Za-z]+//')"
+    if [[ -z "$cleaned" ]]; then
+      cleaned="$raw_name"
+    fi
+  fi
+
+  printf '%s' "$cleaned"
+}
+
 register_role_as_agent() {
   local account_dir="$1"
   local role_dir="$2"
@@ -53,6 +68,7 @@ register_role_as_agent() {
   if [[ "$display_name" == "$role_base" ]]; then
     display_name="$role_base"
   fi
+  display_name="$(clean_role_display_name "$team_code" "$display_name")"
 
   agent_id="MID-AT-${team_code}-${role_no}"
   agent_dir="$account_dir/agents/$agent_id"

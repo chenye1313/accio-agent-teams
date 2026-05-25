@@ -49,15 +49,26 @@ function Write-DefaultMarkdown($Path, $Title, $Body) {
   }
 }
 
+function Get-RoleDisplayName($RoleBase, $TeamCode) {
+  $Name = $RoleBase -replace "^[^_]*_", ""
+  if (-not $Name) {
+    $Name = $RoleBase
+  }
+  if ($TeamCode -eq "FTBP") {
+    $Name = $Name -replace "^[A-Za-z]+(?=[\u4e00-\u9fff])", ""
+  }
+  if (-not $Name) {
+    $Name = $RoleBase
+  }
+  return $Name
+}
+
 function Register-RoleAsAgent($AccountDir, $RoleDir, $TeamCode, $TeamDisplay, $InstalledTeamDir) {
   $RoleBase = $RoleDir.Name
   $RoleNo = $RoleBase -replace "_.*$", ""
-  $DisplayName = $RoleBase -replace "^[^_]*_", ""
+  $DisplayName = Get-RoleDisplayName $RoleBase $TeamCode
   if (-not $RoleNo) {
     $RoleNo = $RoleBase
-  }
-  if (-not $DisplayName) {
-    $DisplayName = $RoleBase
   }
 
   $AgentId = "MID-AT-$TeamCode-$RoleNo"
