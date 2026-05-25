@@ -126,3 +126,27 @@ Default model: DeepSeek V4 Pro (...)
 4. 打开 `Agent profile root` 对应目录，确认里面有 `MID-AT-.../profile.jsonc`。
 5. 打开 `Team conversation` 对应文件，确认 Team 元数据已生成。
 6. 如果报 `tar.exe not found`，说明 Windows 版本太老或环境被精简，需要升级系统或改用本地源码安装。
+
+## Windows 离线文件夹安装
+
+当 GitHub 在线安装在客户电脑上不稳定时，使用离线文件夹安装：
+
+1. 把整个仓库文件夹发给客户。
+2. 客户解压后，不要移动里面的 `packages` 和 `install` 文件夹。
+3. 客户先打开 Accio 并登录一次，然后完全退出 Accio。
+4. 双击根目录脚本：
+
+```text
+B_install_positioning_team.cmd    安装外贸经营定位专家Team
+A_install_knowledge_team.cmd      安装企业知识资产中心Team
+INSTALL_all_teams.cmd             两个 Team 都安装
+CHECK_installed_teams.cmd         检查是否写入成功
+```
+
+离线安装脚本会调用：
+
+```text
+install/local-win.ps1
+```
+
+它会把 `SourceRoot` 固定为当前文件夹，不会访问 GitHub。

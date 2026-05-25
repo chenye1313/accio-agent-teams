@@ -139,6 +139,19 @@ Default model: DeepSeek V4 Pro (...)
 4. 是否重启或刷新过 Accio。
 5. 公司网络是否拦截 GitHub 下载；如果下载失败，终端会停在 `Invoke-WebRequest` 或 `tar.exe` 附近。
 
+## Windows 离线文件夹安装
+
+如果客户电脑一直无法通过 GitHub 命令安装，就不要继续折腾网络路径。把本仓库整个文件夹发给客户，让客户解压后运行根目录的脚本：
+
+```text
+B_install_positioning_team.cmd    安装外贸经营定位专家Team
+A_install_knowledge_team.cmd      安装企业知识资产中心Team
+INSTALL_all_teams.cmd             两个 Team 都安装
+CHECK_installed_teams.cmd         检查是否写入成功
+```
+
+离线安装不访问 GitHub，会直接读取当前文件夹里的 `packages/`。详细说明见 [Windows 离线文件夹安装](WINDOWS_OFFLINE_README.md)。
+
 ## Output 产物约定
 
 每个 Team 都带有 `output/README.md`。运行产物统一写入：
