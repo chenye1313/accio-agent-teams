@@ -17,10 +17,10 @@ macOS / Linux：
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/chenye1313/accio-agent-teams/main/install/mac.sh)" -- --team foreign-trade-business-positioning-team
 ```
 
-Windows PowerShell：
+Windows CMD：
 
-```powershell
-powershell -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/chenye1313/accio-agent-teams/main/install/win.ps1'))) -Team foreign-trade-business-positioning-team"
+```bat
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$p=Join-Path $env:TEMP 'accio-agent-teams-win.ps1'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/chenye1313/accio-agent-teams/main/install/win.ps1' -OutFile $p; & $p -Team 'foreign-trade-business-positioning-team'"
 ```
 
 安装企业知识资产中心 Team 时，把 team key 换成：
@@ -56,6 +56,8 @@ Windows：
 ```powershell
 .\install\win.ps1 -Team foreign-trade-business-positioning-team -AccioAgentReadyRoot "C:\path\to\.accio\agent-ready"
 ```
+
+如果在 `cmd.exe` 里执行，不要使用中文引号、弯引号或省略 `https://`。命令必须保留完整 URL。
 
 ## Output 产物约定
 
