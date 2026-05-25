@@ -11,6 +11,13 @@ https://github.com/chenye1313/accio-agent-teams
 - Windows：打开 `cmd.exe`，复制 Windows CMD 命令。
 - Mac：打开 Terminal，复制 macOS / Linux 命令。
 
+再判断要安装哪个 Team：
+
+- A：企业知识资产中心Team（知识库）
+- B：外贸经营定位专家Team（经营定位）
+
+两个 Team 是单独安装的。只要知识库就只装 A；只要经营定位就只装 B；两个都要就按自己的系统分别执行 A 和 B 两条命令。
+
 不要把中文说明粘进命令行，只复制代码块里的命令。
 
 ## 安装器会安装什么
@@ -36,16 +43,16 @@ https://github.com/chenye1313/accio-agent-teams
 
 ## Windows CMD
 
-安装外贸经营定位专家 Team：
-
-```bat
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$p=Join-Path $env:TEMP 'accio-agent-teams-win.ps1'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/chenye1313/accio-agent-teams/main/install/win.ps1' -OutFile $p; & $p -Team 'foreign-trade-business-positioning-team'"
-```
-
-安装企业知识资产中心 Team：
+### A. 企业知识资产中心Team（知识库）
 
 ```bat
 powershell -NoProfile -ExecutionPolicy Bypass -Command "$p=Join-Path $env:TEMP 'accio-agent-teams-win.ps1'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/chenye1313/accio-agent-teams/main/install/win.ps1' -OutFile $p; & $p -Team 'enterprise-knowledge-assets-team'"
+```
+
+### B. 外贸经营定位专家Team（经营定位）
+
+```bat
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$p=Join-Path $env:TEMP 'accio-agent-teams-win.ps1'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/chenye1313/accio-agent-teams/main/install/win.ps1' -OutFile $p; & $p -Team 'foreign-trade-business-positioning-team'"
 ```
 
 Windows 默认安装到：
@@ -57,16 +64,16 @@ Windows 默认安装到：
 
 ## macOS / Linux
 
-安装外贸经营定位专家 Team：
-
-```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/chenye1313/accio-agent-teams/main/install/mac.sh)" -- --team foreign-trade-business-positioning-team
-```
-
-安装企业知识资产中心 Team：
+### A. 企业知识资产中心Team（知识库）
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/chenye1313/accio-agent-teams/main/install/mac.sh)" -- --team enterprise-knowledge-assets-team
+```
+
+### B. 外贸经营定位专家Team（经营定位）
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/chenye1313/accio-agent-teams/main/install/mac.sh)" -- --team foreign-trade-business-positioning-team
 ```
 
 macOS / Linux 默认安装到：
