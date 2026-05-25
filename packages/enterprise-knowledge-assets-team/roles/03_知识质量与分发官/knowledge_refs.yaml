@@ -1,0 +1,39 @@
+version: "0.1"
+team_id: "企业知识库基座Team"
+role_id: "03_知识质量与分发官"
+layer: "执行负责人"
+private_knowledge: "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/03_知识质量与分发官/"
+skills_root: "agent-ready/Teams/企业知识资产中心Team/roles/03_知识质量与分发官/skills/"
+
+must_load:
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/03_角色交接门与返工规则.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/04_证据隐私质量门.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/05_六组分发与回流规则.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/02_知识资产构建师/07_输出模板与交接格式.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/03_知识质量与分发官/01_质量分发状态机.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/03_知识质量与分发官/02_证据等级与来源一致性规则.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/03_知识质量与分发官/03_四库条目验收与AI-Slop扫描.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/03_知识质量与分发官/04_六组分发包与调用契约.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/03_知识质量与分发官/05_回流记录与知识更新规则.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/03_知识质量与分发官/06_输出模板与交接格式.md"
+
+skills:
+  - "agent-ready/Teams/企业知识资产中心Team/roles/03_知识质量与分发官/skills/evidence-source-quality-auditor/SKILL.md"
+  - "agent-ready/Teams/企业知识资产中心Team/roles/03_知识质量与分发官/skills/knowledge-ai-slop-scanner/SKILL.md"
+  - "agent-ready/Teams/企业知识资产中心Team/roles/03_知识质量与分发官/skills/six-group-distribution-packager/SKILL.md"
+  - "agent-ready/Teams/企业知识资产中心Team/roles/03_知识质量与分发官/skills/feedback-loop-recorder/SKILL.md"
+
+upstream:
+  - "00_Lead知识资产总控"
+  - "02_知识资产构建师"
+
+downstream:
+  - "00_Lead知识资产总控"
+  - "六组数字化经营团队"
+
+forbidden:
+  - "不要补写上游缺失字段"
+  - "不要跳过质量门直接分发"
+  - "不要公开权限未知资料"
+  - "不要把待验证内容写成确定结论"
+  - "不要省略回流要求"

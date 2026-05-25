@@ -1,0 +1,36 @@
+version: "0.1"
+team_id: "企业知识库基座Team"
+role_id: "01_资料接收与托管师"
+layer: "执行负责人"
+private_knowledge: "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/01_资料接收与托管师/"
+skills_root: "agent-ready/Teams/企业知识资产中心Team/roles/01_资料接收与托管师/skills/"
+
+must_load:
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/03_角色交接门与返工规则.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/04_证据隐私质量门.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/02_四库建设策略与字段门.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/01_资料接收与托管师/01_资料接收状态机.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/01_资料接收与托管师/02_来源索引与编号规则.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/01_资料接收与托管师/03_脱敏与权限标注规则.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/01_资料接收与托管师/04_资料完整度与四库路由规则.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/01_资料接收与托管师/05_输出模板与交接格式.md"
+
+skills:
+  - "agent-ready/Teams/企业知识资产中心Team/roles/01_资料接收与托管师/skills/source-intake-custodian/SKILL.md"
+  - "agent-ready/Teams/企业知识资产中心Team/roles/01_资料接收与托管师/skills/privacy-anonymization-gate/SKILL.md"
+  - "agent-ready/Teams/企业知识资产中心Team/roles/01_资料接收与托管师/skills/material-routing-indexer/SKILL.md"
+
+upstream:
+  - "00_Lead知识资产总控"
+  - "用户 / 客户企业"
+
+downstream:
+  - "02_知识资产构建师"
+  - "00_Lead知识资产总控"
+
+forbidden:
+  - "不要跳过来源登记"
+  - "不要跳过脱敏"
+  - "不要生成正式四库条目"
+  - "不要判断经营策略"
+  - "不要把权限未知资料标为可公开"

@@ -1,0 +1,97 @@
+version: "0.2"
+updated: "2026-05-23"
+team_id: "foreign_trade_business_positioning_expert_team"
+team_name_cn: "外贸经营定位专家Team"
+package_status: "architecture_ready_not_full_export"
+
+source_of_truth:
+  canonical_knowledge_root: "knowledge-base/"
+  process_evidence_root: "process/"
+  raw_books_root: "书籍/"
+  deliverable_team_root: "agent-ready/Teams/外贸经营定位专家Team/"
+
+delivery_roots:
+  team_package:
+    path: "."
+    include_in_delivery: true
+    purpose: "Team 协议、角色、工作流、知识挂载和质量门"
+  shared_knowledge:
+    path: "knowledge/shared/"
+    include_in_delivery: true
+    purpose: "全 Team 共享知识底座"
+  role_knowledge:
+    path: "knowledge/roles/"
+    include_in_delivery: true
+    purpose: "每个 Agent 的私有知识切片"
+  cases:
+    path: "knowledge/cases/"
+    include_in_delivery: true
+    purpose: "脱敏案例与演示样例"
+  raw_refs:
+    path: "knowledge/raw_refs/"
+    include_in_delivery: true
+    purpose: "原始材料来源索引，不默认包含原文"
+  tests:
+    path: "tests/"
+    include_in_delivery: true
+    purpose: "案例回放与数据化升级验收清单"
+
+internal_only:
+  - path: "../../../knowledge-base/"
+    reason: "源知识库，可复用但不直接等同交付包"
+  - path: "../../../process/"
+    reason: "过程证据、OCR、深读记录，需筛选后外发"
+  - path: "../../../书籍/"
+    reason: "原始书籍和版权材料，默认不外发"
+
+role_packages:
+  - role_id: "00_Lead经营定位总控"
+    role_folder: "roles/00_Lead经营定位总控/"
+    knowledge_refs: "roles/00_Lead经营定位总控/knowledge_refs.yaml"
+    private_knowledge_folder: "knowledge/roles/00_Lead经营定位总控/"
+  - role_id: "01_Intake资料采集官"
+    role_folder: "roles/01_Intake资料采集官/"
+    knowledge_refs: "roles/01_Intake资料采集官/knowledge_refs.yaml"
+    private_knowledge_folder: "knowledge/roles/01_Intake资料采集官/"
+  - role_id: "02_BusinessModel生意模式分析师"
+    role_folder: "roles/02_BusinessModel生意模式分析师/"
+    knowledge_refs: "roles/02_BusinessModel生意模式分析师/knowledge_refs.yaml"
+    private_knowledge_folder: "knowledge/roles/02_BusinessModel生意模式分析师/"
+  - role_id: "03_BuyerJTBD买家任务分析师"
+    role_folder: "roles/03_BuyerJTBD买家任务分析师/"
+    knowledge_refs: "roles/03_BuyerJTBD买家任务分析师/knowledge_refs.yaml"
+    private_knowledge_folder: "knowledge/roles/03_BuyerJTBD买家任务分析师/"
+  - role_id: "04_SupplyMapping供给能力映射师"
+    role_folder: "roles/04_SupplyMapping供给能力映射师/"
+    knowledge_refs: "roles/04_SupplyMapping供给能力映射师/knowledge_refs.yaml"
+    private_knowledge_folder: "knowledge/roles/04_SupplyMapping供给能力映射师/"
+  - role_id: "05_Differentiation差异化定位师"
+    role_folder: "roles/05_Differentiation差异化定位师/"
+    knowledge_refs: "roles/05_Differentiation差异化定位师/knowledge_refs.yaml"
+    private_knowledge_folder: "knowledge/roles/05_Differentiation差异化定位师/"
+  - role_id: "06_Expression表达落地师"
+    role_folder: "roles/06_Expression表达落地师/"
+    knowledge_refs: "roles/06_Expression表达落地师/knowledge_refs.yaml"
+    private_knowledge_folder: "knowledge/roles/06_Expression表达落地师/"
+  - role_id: "07_MetricQualityGate经营罗盘质检官"
+    role_folder: "roles/07_MetricQualityGate经营罗盘质检官/"
+    knowledge_refs: "roles/07_MetricQualityGate经营罗盘质检官/knowledge_refs.yaml"
+    private_knowledge_folder: "knowledge/roles/07_MetricQualityGate经营罗盘质检官/"
+
+export_policy:
+  default_mode: "manifest_first"
+  copy_raw_sources: false
+  copy_sanitized_cards: true
+  copy_case_examples: "only_desensitized"
+  require_review_before_external_delivery:
+    - "privacy_review"
+    - "copyright_review"
+    - "client_case_permission_review"
+    - "platform_upload_test"
+    - "data_privacy_desensitization_review"
+
+data_upgrade_policy:
+  no_private_data_in_delivery: true
+  public_link_only_output_level: "hypothesis_only"
+  customer_data_priority: "backend_inquiry_sales_sku_before_public_competitor_scan"
+  required_gate: "decision-sufficiency-gate"

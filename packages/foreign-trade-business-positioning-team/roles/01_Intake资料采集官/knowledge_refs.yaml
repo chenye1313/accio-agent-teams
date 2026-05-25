@@ -1,0 +1,16 @@
+version: "0.1"
+role_id: "01_Intake资料采集官"
+shared_knowledge: "../../knowledge/shared/"
+private_knowledge: "../../knowledge/roles/01_Intake资料采集官/"
+must_load:
+  - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/02_输入字段与完整度.md"
+  - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+  - "knowledge-base/经营定位/02_输入字段_schema.md"
+  - "knowledge-base/经营定位/06_商家现场调研表.md"
+  - "knowledge-base/经营定位/07_语音访谈脚本.md"
+on_demand:
+  - "process/cases/case2_hotblizzard_profile.yaml"
+  - "knowledge-base/经营定位/05_外贸Agent资料补缺映射.md"
+forbidden:
+  - "不要做最终定位判断"
+  - "资料不足时只输出追问和缺口"

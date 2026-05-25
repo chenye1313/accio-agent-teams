@@ -1,0 +1,14 @@
+version: "0.1"
+role_id: "03_BuyerJTBD买家任务分析师"
+shared_knowledge: "../../knowledge/shared/"
+private_knowledge: "../../knowledge/roles/03_BuyerJTBD买家任务分析师/"
+must_load:
+  - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+  - "process/deep-review/book-indexes/B01_Competing Against Luck (Clayton M. Chris.md"
+  - "process/deep-review/book-indexes/B03_JTBD Book Updated 121119 (Lindsay Ulwick.md"
+  - "knowledge-base/经营定位/02_输入字段_schema.md"
+on_demand:
+  - "process/cases/case2_hotblizzard_profile.yaml"
+forbidden:
+  - "不要把产品名写成 Job"
+  - "不要只写用户画像不写采购任务"

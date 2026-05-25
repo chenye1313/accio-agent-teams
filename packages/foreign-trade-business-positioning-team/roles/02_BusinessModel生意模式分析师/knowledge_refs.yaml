@@ -1,0 +1,16 @@
+version: "0.1"
+role_id: "02_BusinessModel生意模式分析师"
+shared_knowledge: "../../knowledge/shared/"
+private_knowledge: "../../knowledge/roles/02_BusinessModel生意模式分析师/"
+must_load:
+  - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+  - "knowledge-base/经营定位/03_方法模块索引.yaml"
+  - "process/deep-review/book-indexes/B04_商业的本质 (杰克•韦尔奇 [杰克•韦尔奇]) (z-library.sk, 1.md"
+  - "process/deep-review/book-indexes/B05_商业设计元素周期表.md"
+on_demand:
+  - "process/deep-review/book-indexes/B06_绝对成交：一页纸营销计划：九宫格思维教你持续开发客户，实现业绩倍增 (超级畅销书.md"
+  - "process/cases/case1_sweethome_extract.md"
+  - "process/cases/case2_hotblizzard_profile.yaml"
+forbidden:
+  - "不要把制造商身份当成经营模式结论"
+  - "不要同时主打所有模式"

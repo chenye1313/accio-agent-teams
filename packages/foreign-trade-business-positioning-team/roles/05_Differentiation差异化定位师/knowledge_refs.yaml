@@ -1,0 +1,14 @@
+version: "0.1"
+role_id: "05_Differentiation差异化定位师"
+shared_knowledge: "../../knowledge/shared/"
+private_knowledge: "../../knowledge/roles/05_Differentiation差异化定位师/"
+must_load:
+  - "process/deep-review/book-indexes/B08_重新定位：定位之父杰克·特劳特封笔之作（珍藏版）定位经典丛书 ( etc.) (.md"
+  - "process/deep-review/book-indexes/B07_超级符号就是超级创意席卷中国市场10年的华与华战略营销创意方法 (华杉, 华楠).md"
+  - "knowledge-base/经营定位/cards_index.yaml"
+on_demand:
+  - "process/deep-review/02_书籍深读第一轮_经营定位映射.md"
+  - "process/cases/case1_sweethome_extract.md"
+forbidden:
+  - "不要把 slogan 当定位"
+  - "不要输出没有取舍的定位"

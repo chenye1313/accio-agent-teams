@@ -1,0 +1,113 @@
+version: "0.2"
+team: "外贸经营定位专家Team"
+updated: "2026-05-23"
+
+shared_input:
+  - client_profile_yaml
+  - store_performance_snapshot
+  - decision_sufficiency_gate
+  - evidence_sources
+  - missing_fields
+
+handoffs:
+  - from: "01_Intake资料采集官"
+    to: "02_BusinessModel生意模式分析师"
+    required_outputs:
+      - client_profile_yaml
+      - completeness_grade
+      - data_maturity_grade
+      - missing_data_pack
+      - missing_fields
+    block_if:
+      - "brand_name missing"
+      - "main_products missing"
+      - "current_business_model missing"
+
+  - from: "01_Intake资料采集官"
+    to: "00_Lead经营定位总控"
+    stage: "BP_M00.5"
+    required_outputs:
+      - client_profile_yaml
+      - store_performance_snapshot
+      - data_maturity_grade
+      - missing_data_pack
+    block_if:
+      - "client_profile_yaml missing"
+      - "public link only but output requested as final decision"
+
+  - from: "00_Lead经营定位总控"
+    to: "02_BusinessModel生意模式分析师"
+    stage: "after_decision_sufficiency_gate"
+    required_outputs:
+      - decision_sufficiency_gate
+      - allowed_output_level
+    block_if:
+      - "decision_sufficiency_gate blocked"
+
+  - from: "02_BusinessModel生意模式分析师"
+    to: "03_BuyerJTBD买家任务分析师"
+    required_outputs:
+      - primary_business_model
+      - secondary_business_models
+      - unsuitable_models
+      - model_evidence
+      - sku_business_implication
+    block_if:
+      - "primary_business_model empty"
+      - "model has no evidence"
+
+  - from: "03_BuyerJTBD买家任务分析师"
+    to: "04_SupplyMapping供给能力映射师"
+    required_outputs:
+      - priority_buyer
+      - core_job
+      - desired_outcomes
+      - purchase_anxiety
+      - buyer_segment_confidence
+    block_if:
+      - "core_job contains only product name"
+      - "desired_outcomes empty"
+
+  - from: "04_SupplyMapping供给能力映射师"
+    to: "05_Differentiation差异化定位师"
+    required_outputs:
+      - job_capability_fit
+      - unsupported_claims
+      - capability_gaps
+      - market_common_claims
+      - differentiation_openings
+    block_if:
+      - "all differentiators are unsupported"
+
+  - from: "05_Differentiation差异化定位师"
+    to: "06_Expression表达落地师"
+    required_outputs:
+      - positioning_statement
+      - differentiation_points
+      - forbidden_claims
+      - expression_path
+    block_if:
+      - "positioning_statement has no buyer"
+      - "no forbidden_claims"
+
+  - from: "06_Expression表达落地师"
+    to: "07_MetricQualityGate经营罗盘质检官"
+    required_outputs:
+      - seven_screen_brief
+      - trust_proofs
+      - cta
+    block_if:
+      - "seven_screen_brief less than 7 screens"
+      - "trust_proofs empty"
+
+  - from: "07_MetricQualityGate经营罗盘质检官"
+    to: "00_Lead经营定位总控"
+    required_outputs:
+      - metric_impact_table
+      - baseline_metrics
+      - first_7_day_check
+      - lead_quality_gate
+      - pass_fail
+    block_if:
+      - "metric_impact_table empty"
+      - "redline failed"

@@ -1,0 +1,17 @@
+version: "0.1"
+role_id: "00_Lead经营定位总控"
+shared_knowledge: "../../knowledge/shared/"
+private_knowledge: "../../knowledge/roles/00_Lead经营定位总控/"
+must_load:
+  - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+  - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/03_方法路由卡.md"
+  - "knowledge-base/经营定位/01_能力问题与验收.md"
+  - "knowledge-base/经营定位/cards_index.yaml"
+  - "knowledge-base/经营定位/04_经营定位报告模板.md"
+  - "knowledge-base/经营罗盘/00_指标库.md"
+on_demand:
+  - "knowledge-base/经营定位/00_知识库重构蓝图.md"
+  - "process/deep-review/02_书籍深读第一轮_经营定位映射.md"
+forbidden:
+  - "不要全量读取所有书籍原文"
+  - "不要跳过质量门直接生成最终报告"

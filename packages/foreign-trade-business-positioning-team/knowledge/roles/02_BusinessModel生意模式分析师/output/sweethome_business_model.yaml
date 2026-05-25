@@ -1,0 +1,177 @@
+# Sweet Home（Hangzhou Weijia）生意模式分析
+# 来源：https://wjsweethome.en.alibaba.com/  +  https://weijiaconstruction.en.alibaba.com/
+# 分析日期：2026-05-24
+# 角色：02_BusinessModel生意模式分析师
+
+business_model_analysis:
+  role_id: "02_BusinessModel生意模式分析师"
+  input_profile_id: "sweethome_hangzhou_weijia"
+  status: "need_more_info"   # 主模式候选明确，但缺订单结构/项目案例的硬证据，不能下 pass
+
+  # --------------------------------------------------------------------------
+  # 一、抓到的事实（来自两家阿里店铺公开页）
+  # --------------------------------------------------------------------------
+  observed_facts:
+    company: "Hangzhou Weijia Construction And Decoration Co., Ltd."
+    brand: "Sweet Home"
+    store_age_main: "8 年金品（weijiaconstruction.en.alibaba.com，5.0 / 在线营收 US$310,000+）"
+    store_age_new:  "1 年新店（wjsweethome.en.alibaba.com，在线营收 US$110,000+，准时交货 100%）"
+    years_in_industry: 15
+    staff: 27
+    main_categories:
+      - "Aluminum pergola（铝合金凉亭/电动百叶顶 Bioclimatic Pavilion）"
+      - "Outdoor kitchen（户外厨房橱柜）"
+      - "Outdoor furniture"
+      - "Aluminum windows & doors"
+      - "Aluminum fence / louver / awning / WPC decking / curtain wall / garage door"
+    main_markets: ["North America", "Western Europe", "Mid East"]
+    price_band: "Pergola US$80–247 / m²，MOQ 1 m²"
+    customization_signals:
+      - "Sample-based customization"
+      - "ODM services available"
+      - "Design-based customization"
+      - "Minor customization"
+      - "Consolidated procurement services（合并采购）"
+    quality_signals:
+      - "SGS 认证 / Verified Pro"
+      - "Quality control / 原料溯源 / 成品检验"
+      - "Pergola/Gazebo&Pavilion 类目交货准时率 #3"
+    title_keyword_signal: "产品标题反复出现 'for Wholesale Contractor Supply'、'Bioclimatic Pavilion'、'Terrace / Backyard / Courtyard Design'"
+
+  # --------------------------------------------------------------------------
+  # 二、候选模式评分（按 02_证据字段与评分规则.md，0–10 分）
+  # --------------------------------------------------------------------------
+  model_scores:
+    项目解决方案型: 7        # 户外空间组合（凉亭+厨房+围栏+地板+门窗）+ Contractor 关键词 + Design-based，但缺 CAD/安装/项目案例硬证据
+    OEM/ODM型: 6              # 明确 ODM + Sample-based + Design-based，但缺品牌客户名单和打样周期数据
+    工厂供货型: 6              # 8 年金品、100% 准时、27 人厂、铝型材类目，但缺产能/年产量数据
+    柔性定制型: 5              # MOQ 1㎡ + 多工艺组合，但单价 US$80–247/㎡ 属于中高客单，不像典型柔性小单逻辑
+    渠道分销型: 4              # Contractor / Wholesale 关键词暗示，但无展厅/手册/区域代理证据
+    组货贸易型: 3              # 跨多个铝制品类目，但主线是自厂能力，不是组货
+    品牌孵化供应链型: 2       # 无产品策略共创、趋势研判、内容素材证据
+    小单测试供应链型: 2       # 与户外建造类品类不匹配
+    平台/服务型: 0
+
+  # --------------------------------------------------------------------------
+  # 三、候选主模式（待 Intake 补证据后定型）
+  # --------------------------------------------------------------------------
+  candidate_primary:
+    - model: "项目解决方案型"
+      hypothesis: "服务北美/西欧的户外空间承包商（Contractor）与高端经销商，卖的不是单品 Pergola，而是『庭院/露台/泳池区户外生活场景』的铝制品组合方案。"
+      why_likely:
+        - "产品矩阵已覆盖户外空间的顶（Pergola/Awning）+ 围（Fence/Louver）+ 用（Outdoor Kitchen/Furniture）+ 地（WPC Decking）+ 门窗（Aluminum Door/Window）= 一个完整场景。"
+        - "产品标题反复带 'Contractor Supply' / 'Backyard / Courtyard / Terrace Design'。"
+        - "主市场北美/西欧/中东 = Outdoor Living 文化最强、Contractor 渠道最成熟的市场。"
+        - "Design-based customization + Consolidated procurement = 项目型客户最在意的两项服务。"
+      missing_to_confirm_as_primary:
+        - "近 12 个月订单中『项目型客户（Contractor / Hospitality / Landscape Designer）』订单占比"
+        - "是否提供 CAD/3D 出图、施工图、安装指导、本地服务对接"
+        - "代表性项目案例（酒店/民宿/别墅/商业空间）"
+        - "Pergola + Outdoor Kitchen + Fence 是否会出现在同一笔订单中（跨品类组合率）"
+
+    - model: "OEM/ODM 型"   # 备用候选，仅当上面证据缺失时降级到这里
+      hypothesis: "为海外品牌商 / Wholesaler 做铝合金 Pergola 的贴牌与改款。"
+      why_likely:
+        - "明确写 ODM services available + Sample-based customization。"
+        - "Sweet Home 自身像 OEM 工厂打造的对外品牌。"
+      missing_to_confirm:
+        - "是否有海外 Brand 客户清单、私模合作、独家包装"
+
+  # --------------------------------------------------------------------------
+  # 四、辅模式（待主模式确认后再排序）
+  # --------------------------------------------------------------------------
+  secondary_candidates:
+    - name: "OEM/ODM 型"
+      reason: "Pergola 单品层面对品牌商/Wholesaler 提供贴牌与改款，是项目型主线的天然延伸成交方式。"
+      boundary: "辅模式只接『单品类、可标准化报价』的 ODM 订单，避免吃掉项目方案精力。"
+    - name: "工厂供货型"
+      reason: "面向稳定补货的进口商/连锁经销商，靠 8 年金品 + 100% 准时 + 类目排名背书拿大货。"
+      boundary: "仅服务认可中高客单的渠道，不打低价 Pergola 战。"
+
+  # --------------------------------------------------------------------------
+  # 五、不适合模式（必须写出来，避免万金油）
+  # --------------------------------------------------------------------------
+  unsuitable_models:
+    - name: "品牌孵化供应链型"
+      reason: "无产品策略共创、趋势研判、内容素材、爆款命中案例证据；品类（户外建造）也不适合小单测款逻辑。"
+    - name: "小单测试供应链型"
+      reason: "Pergola/户外厨房是大件、长决策、高客单（US$80–247/㎡，单项目数千美金起），不是测款品类。"
+    - name: "组货贸易型"
+      reason: "客户买的是『自厂的铝制户外解决方案』，不是『代采各类货』；多品类是场景延伸，不是组货。"
+    - name: "平台/服务型"
+      reason: "无订阅、抽成、网络效应、数据资产证据。"
+
+  # --------------------------------------------------------------------------
+  # 六、风险标记
+  # --------------------------------------------------------------------------
+  model_risks:
+    - risk: "双店铺定位漂移"
+      trigger: "8 年老店与 1 年新店（Sweet Home）并行，新店若沿用老店『全铝制品工厂』话术，会稀释 Sweet Home 作为『户外生活空间方案品牌』的认知。"
+      mitigation: "Sweet Home 主店专注 Outdoor Living 场景组合，老店保留通用铝制品工厂角色。"
+    - risk: "Contractor vs 经销商客户混打"
+      trigger: "Contractor 要项目化方案与本地化交付，Wholesaler 要价格和稳定库存，运营动作冲突。"
+      mitigation: "BuyerJTBD 阶段必须确认优先买家。"
+    - risk: "口号化项目方案"
+      trigger: "若实际没有 CAD/安装/案例资产，『项目解决方案』只是话术。"
+      mitigation: "退回 Intake 补案例与服务证据。"
+    - risk: "新店利润稀释"
+      trigger: "新店准时交货 100% 但营收仅 US$110K，若靠低价跑量，会拖低品牌定位。"
+      mitigation: "新店报价带必须不低于老店。"
+
+  # --------------------------------------------------------------------------
+  # 七、飞轮校验（按 04_飞轮与经营罗盘校验.md）
+  # --------------------------------------------------------------------------
+  flywheel_check:
+    pass: true
+    primary_model_loop: "项目解决方案型飞轮"
+    loop_summary: >
+      Outdoor 场景组合方案（Pergola + Kitchen + Fence + Decking）
+      → 单笔订单客单价更高，Contractor 项目风险更低
+      → 形成可拍照、可复用的真实场景案例
+      → 更容易拿到下一个相似户外项目
+      → 沉淀更多场景配置与施工经验
+      → 方案报价能力、合并采购能力反向增强。
+    metric_impacts:
+      first_30_day:
+        - "有效询盘率（项目型询盘占比）"
+        - "询盘转化效率（多品类组合询盘的报价响应）"
+      first_90_day:
+        - "报价订单率（项目方案报价成交率）"
+        - "老客户复购比（Contractor 的下一个项目）"
+        - "客单价 / 跨品类组合率"
+
+  # --------------------------------------------------------------------------
+  # 八、退回 Intake 的补问字段（status=need_more_info 必填）
+  # --------------------------------------------------------------------------
+  missing_fields:
+    - field: "priority_buyer"
+      reason: "未确认主推买家是 Outdoor Contractor、Hospitality 项目方、还是经销商 / Wholesaler。"
+      ask: "近 12 个月最赚钱的 10 个客户中，Contractor / 项目方 / 经销商各占多少？"
+    - field: "main_order_type"
+      reason: "未确认订单是『单 SKU 大货』『项目型组合配置』还是『品牌贴牌』。"
+      ask: "最近 10 个成交订单中，多少笔同时下了 Pergola + 其他品类？平均订单金额？"
+    - field: "case_studies"
+      reason: "项目解决方案型必须有真实项目案例。"
+      ask: "有没有已交付的酒店/民宿/别墅/商业户外项目可作为案例？是否有现场图、客户授权？"
+    - field: "service_capabilities"
+      reason: "需确认是否具备项目型必备服务。"
+      ask: "是否提供 CAD/3D 出图、安装指导、本地服务伙伴、合并采购、海外仓？"
+    - field: "rd_capabilities"
+      reason: "ODM 辅模式需打样周期与设计能力数据。"
+      ask: "平均打样周期？是否有专属设计师？是否有私模合作客户？"
+
+  # --------------------------------------------------------------------------
+  # 九、交接给 03_BuyerJTBD买家任务分析师
+  # --------------------------------------------------------------------------
+  handoff_to_buyer_jtbd:
+    priority_buyer_hypothesis: "北美/西欧的 Outdoor Living 承包商（Pool / Patio / Landscape Contractor）与高端户外空间经销商"
+    buyer_stage: ["已有稳定项目流", "正在升级户外生活产品线", "想减少多供应商协调成本"]
+    core_assumption_to_validate: >
+      该买家真正购买的不是一台 Pergola，而是『一站式、可合并采购、可统一交期、能直接呈现给业主的户外空间组合』，
+      以降低其项目供应链协调成本与施工返工风险。
+    suggested_jtbd_questions:
+      - "Contractor 在一个户外项目里最痛的供应链协调环节是什么？"
+      - "他们用 Pergola + Kitchen + Fence 跨品类下单，更看重统一交期还是统一报价？"
+      - "他们向业主呈现方案时，最缺哪类素材（渲染图、施工节点、材料认证）？"
+      - "他们更愿意为 Sweet Home 的『方案能力』付溢价，还是仅把它当价格更优的工厂？"
+      - "他们最害怕：交期延误、安装不兼容、还是售后无人对接？"

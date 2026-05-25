@@ -1,0 +1,119 @@
+version: "0.1"
+team_id: "foreign_trade_business_positioning_expert_team"
+team_name_cn: "外贸经营定位专家Team"
+team_name_en: "Foreign Trade Business Positioning Expert Team"
+stage: "P0_demo"
+updated: "2026-05-19"
+
+purpose: "为 B2B 外贸供应链企业生成可追溯、可落地、可用经营罗盘验证的经营定位报告。"
+
+entrypoint:
+  role: "00_Lead经营定位总控"
+  workflow: "workflow.md"
+  upload_pack: "platform_upload_pack.md"
+
+delivery_package:
+  architecture: "package_architecture.md"
+  manifest: "delivery_manifest.yaml"
+  knowledge_root: "knowledge/"
+  role_knowledge_refs: "roles/*/knowledge_refs.yaml"
+  source_policy: "canonical_source_upstream_delivery_package_self_contained"
+
+shared_knowledge:
+  strategy: "shared_common_plus_role_private_slices"
+  mount_plan: "knowledge_load_plan.md"
+  mount_yaml: "knowledge_mount.yaml"
+  common:
+    - "knowledge-base/经营定位/01_能力问题与验收.md"
+    - "knowledge-base/经营定位/02_输入字段_schema.md"
+    - "knowledge-base/经营定位/cards_index.yaml"
+    - "knowledge-base/经营定位/04_经营定位报告模板.md"
+    - "knowledge-base/经营罗盘/00_指标库.md"
+
+runtime_outputs:
+  - "client_profile.yaml"
+  - "business_positioning_report.md"
+  - "run_trace.md"
+  - "lead_quality_gate"
+  - "metric_impact_table"
+
+roles:
+  - id: "00"
+    folder: "roles/00_Lead经营定位总控"
+    name: "Lead 经营定位总控"
+    type: "expert_consultant"
+    owns:
+      - "final_report"
+      - "quality_gate"
+      - "conflict_arbitration"
+
+  - id: "01"
+    folder: "roles/01_Intake资料采集官"
+    name: "Intake 资料采集官"
+    type: "assistant_collaboration"
+    owns:
+      - "client_profile_yaml"
+      - "missing_fields"
+      - "follow_up_questions"
+
+  - id: "02"
+    folder: "roles/02_BusinessModel生意模式分析师"
+    name: "BusinessModel 生意模式分析师"
+    type: "expert_consultant"
+    owns:
+      - "primary_business_model"
+      - "secondary_business_models"
+      - "unsuitable_models"
+
+  - id: "03"
+    folder: "roles/03_BuyerJTBD买家任务分析师"
+    name: "BuyerJTBD 买家任务分析师"
+    type: "expert_consultant"
+    owns:
+      - "priority_buyer"
+      - "core_job"
+      - "desired_outcomes"
+      - "purchase_anxiety"
+
+  - id: "04"
+    folder: "roles/04_SupplyMapping供给能力映射师"
+    name: "SupplyMapping 供给能力映射师"
+    type: "expert_consultant"
+    owns:
+      - "job_capability_fit"
+      - "unsupported_claims"
+      - "capability_gaps"
+
+  - id: "05"
+    folder: "roles/05_Differentiation差异化定位师"
+    name: "Differentiation 差异化定位师"
+    type: "expert_consultant"
+    owns:
+      - "positioning_statement"
+      - "differentiation_points"
+      - "forbidden_claims"
+
+  - id: "06"
+    folder: "roles/06_Expression表达落地师"
+    name: "Expression 表达落地师"
+    type: "assistant_collaboration"
+    owns:
+      - "slogan_options"
+      - "visual_hammer"
+      - "trust_proofs"
+      - "seven_screen_brief"
+
+  - id: "07"
+    folder: "roles/07_MetricQualityGate经营罗盘质检官"
+    name: "MetricQualityGate 经营罗盘质检官"
+    type: "expert_consultant"
+    owns:
+      - "metric_impact_table"
+      - "lead_quality_gate"
+      - "revision_requests"
+
+go_no_go:
+  demo_agent: "GO"
+  internal_rehearsal: "GO"
+  customer_delivery: "NO_GO_until_more_cases_and_platform_test"
+  full_multi_agent_automation: "NO_GO_until_platform_capability_verified"

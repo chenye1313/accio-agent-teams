@@ -1,0 +1,66 @@
+version: "0.1"
+team_id: "企业知识库基座Team"
+role_id: "00_Lead知识资产总控"
+layer: "Team Lead"
+private_knowledge: "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/"
+skills_root: "agent-ready/Teams/企业知识资产中心Team/roles/00_Lead知识资产总控/skills/"
+
+must_load:
+  - "output/05_企业知识资产中心与第0组蓝图.md"
+  - "output/06_企业知识资产中心角色与元Accio执行架构.md"
+  - "output/04_外贸AI数字化经营部门蓝图.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/01_总控调度状态机.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/02_四库建设策略与字段门.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/03_角色交接门与返工规则.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/04_证据隐私质量门.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/05_六组分发与回流规则.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/06_输出模板与最终交付格式.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/07_脚本优先执行层.md"
+  - "agent-ready/Teams/企业知识资产中心Team/knowledge/roles/00_Lead知识资产总控/08_内容资产生产线与应用路由.md"
+  - "前段ACCIO资料库分类整理/1、术语专项提取.md"
+  - "前段ACCIO资料库分类整理/2、案例专项提取.md"
+  - "前段ACCIO资料库分类整理/3、正文知识单元化.md"
+  - "前段ACCIO资料库分类整理/4、FAQ 生成与整合.md"
+  - "前段ACCIO资料库分类整理/优秀商业访谈师特质.md"
+
+skills:
+  - "agent-ready/Teams/企业知识资产中心Team/roles/00_Lead知识资产总控/skills/knowledge-asset-lead-orchestrator/SKILL.md"
+  - "agent-ready/Teams/企业知识资产中心Team/roles/00_Lead知识资产总控/skills/script-first-knowledge-pipeline/SKILL.md"
+  - "agent-ready/Teams/企业知识资产中心Team/roles/00_Lead知识资产总控/skills/content-asset-application-router/SKILL.md"
+  - "agent-ready/Teams/企业知识资产中心Team/roles/00_Lead知识资产总控/skills/business-master-table-builder/SKILL.md"
+  - "agent-ready/Teams/企业知识资产中心Team/roles/00_Lead知识资产总控/skills/inquiry-conversion-loop/SKILL.md"
+  - "agent-ready/Teams/企业知识资产中心Team/roles/00_Lead知识资产总控/skills/acio-demo-loop-orchestrator/SKILL.md"
+  - "agent-ready/Teams/企业知识资产中心Team/roles/00_Lead知识资产总控/skills/knowledge-asset-evidence-gate/SKILL.md"
+  - "agent-ready/Teams/企业知识资产中心Team/roles/00_Lead知识资产总控/skills/six-group-knowledge-dispatcher/SKILL.md"
+
+architecture_refs:
+  - "/Users/cheyne/Downloads/百度云/Obsidian Vault/2 工作/MMAI 智能体/元Accio架构师/AGENTS.md"
+  - "/Users/cheyne/Downloads/百度云/Obsidian Vault/2 工作/MMAI 智能体/元Accio架构师/SOUL.md"
+  - "/Users/cheyne/Downloads/百度云/Obsidian Vault/2 工作/MMAI 智能体/元Accio架构师/MEMORY.md"
+
+on_demand:
+  - "agent-ready/Teams/外贸经营定位专家Team/roles/00_Lead经营定位总控/"
+  - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/"
+  - "knowledge-base/经营定位/"
+  - "source-index/全素材索引.md"
+
+downstream_roles:
+  - "01_资料接收与托管师"
+  - "02_知识库构建师"
+  - "03_知识库质量与分发官"
+
+downstream_business_groups:
+  - "经营定位组"
+  - "选品定品组"
+  - "内容表达与设计组"
+  - "推流运营组"
+  - "商机转化组"
+  - "私域沉淀组"
+
+forbidden:
+  - "不要全量读取所有书籍原文"
+  - "不要全量读取所有 PDF OCR 页"
+  - "不要跳过来源和脱敏质量门"
+  - "不要把可脚本校验的流水线动作全部交给 AI"
+  - "不要把方法经验外显为第五库"
+  - "不要承诺已自动接入阿里后台或 OKKI"

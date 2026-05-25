@@ -1,0 +1,134 @@
+version: "0.2"
+updated: "2026-05-23"
+purpose: "外贸经营定位专家 Team 的机器可读知识库挂载表。"
+
+strategy:
+  physical_layout: "one_project_knowledge_base"
+  logical_layout: "shared_common_plus_role_private_slices"
+  recommendation: "如果平台支持角色级知识库，使用 shared_common + role_private；如果平台只支持 Team 级知识库，则用 role instructions 限制每个 Agent 的读取范围。"
+
+shared_common:
+  - path: "knowledge-base/经营定位/01_能力问题与验收.md"
+    purpose: "能力问题、红线、评分"
+  - path: "knowledge-base/经营定位/02_输入字段_schema.md"
+    purpose: "输入字段、最小 12 字段、访谈追问"
+  - path: "knowledge-base/经营定位/cards_index.yaml"
+    purpose: "BP_M00-BP_M07 方法路由"
+  - path: "knowledge-base/经营定位/04_经营定位报告模板.md"
+    purpose: "经营定位报告结构"
+  - path: "knowledge-base/经营罗盘/00_指标库.md"
+    purpose: "指标影响与复盘周期"
+  - path: "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/02_输入字段与完整度.md"
+    purpose: "经营数据字段、数据成熟度、最小数据包、脱敏规则"
+  - path: "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/03_方法路由卡.md"
+    purpose: "含 BP_M00.5 的新版方法路由"
+  - path: "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+    purpose: "数据可信度、数据到决策矩阵、输出降级规则"
+  - path: "agent-ready/Teams/外贸经营定位专家Team/handoff_contract.yaml"
+    purpose: "角色交接契约"
+  - path: "agent-ready/Teams/外贸经营定位专家Team/quality_gates.md"
+    purpose: "Team 红线与验收"
+
+roles:
+  "00_Lead经营定位总控":
+    must_load:
+      - "knowledge-base/经营定位/01_能力问题与验收.md"
+      - "knowledge-base/经营定位/cards_index.yaml"
+      - "knowledge-base/经营定位/04_经营定位报告模板.md"
+      - "knowledge-base/经营罗盘/00_指标库.md"
+      - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+    on_demand:
+      - "knowledge-base/经营定位/00_知识库重构蓝图.md"
+      - "process/deep-review/02_书籍深读第一轮_经营定位映射.md"
+
+  "01_Intake资料采集官":
+    must_load:
+      - "knowledge-base/经营定位/02_输入字段_schema.md"
+      - "knowledge-base/经营定位/06_商家现场调研表.md"
+      - "knowledge-base/经营定位/07_语音访谈脚本.md"
+      - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/02_输入字段与完整度.md"
+      - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+    on_demand:
+      - "process/cases/case2_hotblizzard_profile.yaml"
+      - "knowledge-base/经营定位/05_外贸Agent资料补缺映射.md"
+
+  "02_BusinessModel生意模式分析师":
+    must_load:
+      - "knowledge-base/经营定位/03_方法模块索引.yaml"
+      - "process/deep-review/book-indexes/B04_商业的本质 (杰克•韦尔奇 [杰克•韦尔奇]) (z-library.sk, 1.md"
+      - "process/deep-review/book-indexes/B05_商业设计元素周期表.md"
+      - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+    on_demand:
+      - "process/deep-review/book-indexes/B06_绝对成交：一页纸营销计划：九宫格思维教你持续开发客户，实现业绩倍增 (超级畅销书.md"
+      - "process/cases/case1_sweethome_extract.md"
+      - "process/cases/case2_hotblizzard_profile.yaml"
+
+  "03_BuyerJTBD买家任务分析师":
+    must_load:
+      - "process/deep-review/book-indexes/B01_Competing Against Luck (Clayton M. Chris.md"
+      - "process/deep-review/book-indexes/B03_JTBD Book Updated 121119 (Lindsay Ulwick.md"
+      - "knowledge-base/经营定位/02_输入字段_schema.md"
+      - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+    on_demand:
+      - "process/cases/case2_hotblizzard_profile.yaml"
+      - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+
+  "04_SupplyMapping供给能力映射师":
+    must_load:
+      - "knowledge-base/经营定位/02_输入字段_schema.md"
+      - "process/cases/case1_sweethome_extract.md"
+      - "process/cases/case2_hotblizzard_profile.yaml"
+    on_demand:
+      - "process/deep-review/03_Acciowork外贸Agent_PDF审阅.md"
+
+  "05_Differentiation差异化定位师":
+    must_load:
+      - "process/deep-review/book-indexes/B08_重新定位：定位之父杰克·特劳特封笔之作（珍藏版）定位经典丛书 ( etc.) (.md"
+      - "process/deep-review/book-indexes/B07_超级符号就是超级创意席卷中国市场10年的华与华战略营销创意方法 (华杉, 华楠).md"
+      - "knowledge-base/经营定位/cards_index.yaml"
+    on_demand:
+      - "process/deep-review/02_书籍深读第一轮_经营定位映射.md"
+      - "process/cases/case1_sweethome_extract.md"
+
+  "06_Expression表达落地师":
+    must_load:
+      - "knowledge-base/经营定位/04_经营定位报告模板.md"
+      - "process/cases/case1_sweethome_extract.md"
+      - "knowledge-base/经营定位/05_外贸Agent资料补缺映射.md"
+      - "process/deep-review/book-indexes/B07_超级符号就是超级创意席卷中国市场10年的华与华战略营销创意方法 (华杉, 华楠).md"
+    on_demand:
+      - "process/deep-review/book-indexes/B06_绝对成交：一页纸营销计划：九宫格思维教你持续开发客户，实现业绩倍增 (超级畅销书.md"
+
+  "07_MetricQualityGate经营罗盘质检官":
+    must_load:
+      - "knowledge-base/经营罗盘/00_指标库.md"
+      - "knowledge-base/经营定位/01_能力问题与验收.md"
+      - "knowledge-base/经营定位/04_经营定位报告模板.md"
+      - "tests/case2_hotblizzard_replay.md"
+      - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/05_经营罗盘指标映射.md"
+      - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+    on_demand:
+      - "output/经营定位专家小闭环/case2_run_trace.md"
+
+case_memory:
+  - "process/cases/case1_sweethome_extract.md"
+  - "process/cases/case2_hotblizzard_profile.yaml"
+  - "output/经营定位专家小闭环/case2_business_positioning_report.md"
+  - "tests/case2_hotblizzard_replay.md"
+  - "agent-ready/Teams/外贸经营定位专家Team/tests/sweethome_data_upgrade_replay.md"
+
+scriptable_first:
+  - "knowledge-base/经营定位/02_输入字段_schema.md"
+  - "knowledge-base/经营定位/cards_index.yaml"
+  - "knowledge-base/经营定位/04_经营定位报告模板.md"
+  - "knowledge-base/经营罗盘/00_指标库.md"
+  - "knowledge-base/经营定位/01_能力问题与验收.md"
+  - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+
+forbidden:
+  - "do_not_load_all_books_for_all_roles"
+  - "do_not_treat_cases_as_universal_templates"
+  - "do_not_generate_final_positioning_without_customer_evidence"
+  - "do_not_write_expression_before_differentiation_passes"
+  - "do_not_pass_quality_gate_without_metric_mapping"
+  - "do_not_treat_public_competitor_scan_as_customer_sales_evidence"

@@ -1,0 +1,16 @@
+version: "0.1"
+role_id: "07_MetricQualityGate经营罗盘质检官"
+shared_knowledge: "../../knowledge/shared/"
+private_knowledge: "../../knowledge/roles/07_MetricQualityGate经营罗盘质检官/"
+must_load:
+  - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/05_经营罗盘指标映射.md"
+  - "agent-ready/Teams/外贸经营定位专家Team/knowledge/shared/07_经营数据证据门.md"
+  - "knowledge-base/经营罗盘/00_指标库.md"
+  - "knowledge-base/经营定位/01_能力问题与验收.md"
+  - "knowledge-base/经营定位/04_经营定位报告模板.md"
+  - "tests/case2_hotblizzard_replay.md"
+on_demand:
+  - "output/经营定位专家小闭环/case2_run_trace.md"
+forbidden:
+  - "不要只看格式不看经营指标"
+  - "红线失败时不要允许交付"

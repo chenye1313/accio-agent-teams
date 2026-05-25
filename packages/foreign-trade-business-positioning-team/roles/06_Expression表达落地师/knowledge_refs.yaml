@@ -1,0 +1,14 @@
+version: "0.1"
+role_id: "06_Expression表达落地师"
+shared_knowledge: "../../knowledge/shared/"
+private_knowledge: "../../knowledge/roles/06_Expression表达落地师/"
+must_load:
+  - "knowledge-base/经营定位/04_经营定位报告模板.md"
+  - "process/cases/case1_sweethome_extract.md"
+  - "knowledge-base/经营定位/05_外贸Agent资料补缺映射.md"
+  - "process/deep-review/book-indexes/B07_超级符号就是超级创意席卷中国市场10年的华与华战略营销创意方法 (华杉, 华楠).md"
+on_demand:
+  - "process/deep-review/book-indexes/B06_绝对成交：一页纸营销计划：九宫格思维教你持续开发客户，实现业绩倍增 (超级畅销书.md"
+forbidden:
+  - "不要在差异化未通过前写页面文案"
+  - "不要用空泛 banner 文案替代 7 屏 brief"
