@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ARCHIVE_URL="${REPO_ARCHIVE_URL:-https://github.com/chenye1313/accio-agent-teams/archive/refs/heads/main.zip}"
+REPO_ARCHIVE_URL="${REPO_ARCHIVE_URL:-https://github.com/chenye1313/accio-agent-teams/archive/refs/heads/main.tar.gz}"
 TEAM=""
 ACCIO_AGENT_READY_ROOT="${ACCIO_AGENT_READY_ROOT:-}"
 ACCIO_TEAM_ROOT="${ACCIO_TEAM_ROOT:-}"
@@ -368,9 +368,9 @@ esac
 
 if [[ -z "$SOURCE_ROOT" ]]; then
   TMP_DIR="$(mktemp -d)"
-  ARCHIVE="$TMP_DIR/repo.zip"
+  ARCHIVE="$TMP_DIR/repo.tar.gz"
   curl -fsSL "$REPO_ARCHIVE_URL" -o "$ARCHIVE"
-  unzip -q "$ARCHIVE" -d "$TMP_DIR"
+  tar -xzf "$ARCHIVE" -C "$TMP_DIR"
   SOURCE_ROOT="$(find "$TMP_DIR" -mindepth 1 -maxdepth 1 -type d | head -n 1)"
 fi
 
