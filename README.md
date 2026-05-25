@@ -40,8 +40,10 @@ macOS / Linux：
 Windows：
 
 ```text
-%USERPROFILE%\.accio\agent-ready\Teams\<TeamName>
+%USERPROFILE%\.accio\agent-ready\Teams\<team-key>
 ```
+
+Windows 默认使用英文 `team-key` 作为文件夹名，避免 PowerShell 5.1 在中文路径上出现乱码。
 
 也可以指定目标目录：
 

@@ -10,8 +10,8 @@ param(
 $ErrorActionPreference = "Stop"
 
 switch ($Team) {
-  "foreign-trade-business-positioning-team" { $TeamName = "外贸经营定位专家Team" }
-  "enterprise-knowledge-assets-team" { $TeamName = "企业知识资产中心Team" }
+  "foreign-trade-business-positioning-team" { $TeamFolder = "foreign-trade-business-positioning-team" }
+  "enterprise-knowledge-assets-team" { $TeamFolder = "enterprise-knowledge-assets-team" }
   default { throw "Unknown team key: $Team" }
 }
 
@@ -33,9 +33,9 @@ if (-not (Test-Path -LiteralPath $TeamSrc -PathType Container)) {
 if ($AccioTeamRoot) {
   $DestTeam = $AccioTeamRoot
 } elseif ($AccioAgentReadyRoot) {
-  $DestTeam = Join-Path $AccioAgentReadyRoot "Teams\$TeamName"
+  $DestTeam = Join-Path $AccioAgentReadyRoot "Teams\$TeamFolder"
 } else {
-  $DestTeam = Join-Path $env:USERPROFILE ".accio\agent-ready\Teams\$TeamName"
+  $DestTeam = Join-Path $env:USERPROFILE ".accio\agent-ready\Teams\$TeamFolder"
 }
 
 $DestParent = Split-Path -Parent $DestTeam
