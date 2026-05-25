@@ -150,3 +150,5 @@ install/local-win.ps1
 ```
 
 它会把 `SourceRoot` 固定为当前文件夹，不会访问 GitHub。
+
+不要在 zip 压缩包里直接双击运行，必须先解压。如果 Windows 提示文件来自互联网，先右键 zip 文件，在属性里点 `Unblock / 解除锁定`，再解压。

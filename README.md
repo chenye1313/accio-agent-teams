@@ -152,6 +152,8 @@ CHECK_installed_teams.cmd         检查是否写入成功
 
 离线安装不访问 GitHub，会直接读取当前文件夹里的 `packages/`。详细说明见 [Windows 离线文件夹安装](WINDOWS_OFFLINE_README.md)。
 
+注意：不要在 zip 压缩包里直接双击运行，必须先解压。如果 Windows 提示文件来自互联网，先右键 zip 文件，在属性里点 `Unblock / 解除锁定`，再解压。
+
 ## Output 产物约定
 
 每个 Team 都带有 `output/README.md`。运行产物统一写入：
