@@ -5,8 +5,11 @@ param(
   [string]$AccioTeamRoot = $env:ACCIO_TEAM_ROOT,
   [string]$AccioHome = $env:ACCIO_HOME,
   [string]$AccountId = $env:ACCIO_ACCOUNT_ID,
+  [string]$AccioModelProvider = $env:ACCIO_MODEL_PROVIDER,
+  [string]$AccioModelName = $env:ACCIO_MODEL_NAME,
+  [string]$AccioModelDisplayName = $env:ACCIO_MODEL_DISPLAY_NAME,
   [string]$SourceRoot = "",
-  [string]$RepoArchiveUrl = "https://github.com/chenye1313/accio-agent-teams/archive/refs/heads/main.zip",
+  [string]$RepoArchiveUrl = "https://github.com/chenye1313/accio-agent-teams/archive/refs/heads/main.tar.gz",
   [switch]$PackageOnly
 )
 
@@ -28,6 +31,15 @@ switch ($Team) {
 
 if (-not $AccioHome) {
   $AccioHome = Join-Path $env:USERPROFILE ".accio"
+}
+if (-not $AccioModelProvider) {
+  $AccioModelProvider = "accio"
+}
+if (-not $AccioModelName) {
+  $AccioModelName = "1Nova-bW7yT4kL9pN2"
+}
+if (-not $AccioModelDisplayName) {
+  $AccioModelDisplayName = "DeepSeek V4 Pro"
 }
 
 function JsonString($Value) {
@@ -61,6 +73,27 @@ function Get-RoleDisplayName($RoleBase, $TeamCode) {
     $Name = $RoleBase
   }
   return $Name
+}
+
+function Assert-AccioAccountsReady() {
+  $AccountsRoot = Join-Path $AccioHome "accounts"
+  if (-not (Test-Path -LiteralPath $AccountsRoot -PathType Container)) {
+    throw "Accio accounts not found: $AccountsRoot. Open Accio and sign in once, then run the installer again."
+  }
+
+  $AllAccountDirs = @(Get-ChildItem -LiteralPath $AccountsRoot -Directory | Sort-Object Name)
+  $AllAccountNames = @($AllAccountDirs | ForEach-Object { $_.Name })
+  if ($AccountId) {
+    $AccountPath = Join-Path $AccountsRoot $AccountId
+    if (-not (Test-Path -LiteralPath $AccountPath -PathType Container)) {
+      throw "Accio account not found: $AccountPath. Existing accounts: $($AllAccountNames -join ', ')"
+    }
+  } else {
+    $NonGuestAccountDirs = @($AllAccountDirs | Where-Object { $_.Name -ne "guest" })
+    if ($NonGuestAccountDirs.Count -eq 0) {
+      throw "No non-guest Accio account found under: $AccountsRoot. Open Accio and sign in with the target user, then run the installer again."
+    }
+  }
 }
 
 function Register-RoleAsAgent($AccountDir, $RoleDir, $TeamCode, $TeamDisplay, $InstalledTeamDir) {
@@ -175,8 +208,9 @@ function Register-RoleAsAgent($AccountDir, $RoleDir, $TeamCode, $TeamDisplay, $I
     "  ""description"": $(JsonString "$DisplayName from $TeamDisplay. Installed from GitHub package $Team."),",
     "  ""vibe"": ""expert"",",
     "  ""model"": {",
-    "    ""provider"": ""auto"",",
-    "    ""name"": ""auto""",
+    "    ""provider"": $(JsonString $AccioModelProvider),",
+    "    ""name"": $(JsonString $AccioModelName),",
+    "    ""displayName"": $(JsonString $AccioModelDisplayName)",
     "  },",
     "  ""defaultProject"": {",
     "    ""dir"": $(JsonString $ProjectDir)",
@@ -279,15 +313,29 @@ function Register-AccioTeam($InstalledTeamDir, $TeamCode, $TeamDisplay) {
     throw "Accio accounts not found: $AccountsRoot. Open Accio and sign in once, then run the installer again."
   }
 
+  Write-Host "Accio home: $AccioHome"
+  Write-Host "Accio accounts root: $AccountsRoot"
+  $AllAccountDirs = @(Get-ChildItem -LiteralPath $AccountsRoot -Directory | Sort-Object Name)
+  $AllAccountNames = @($AllAccountDirs | ForEach-Object { $_.Name })
+  Write-Host "Accio accounts found: $($AllAccountNames -join ', ')"
+
   if ($AccountId) {
-    $AccountDirs = @(Get-Item -LiteralPath (Join-Path $AccountsRoot $AccountId))
+    $AccountPath = Join-Path $AccountsRoot $AccountId
+    if (-not (Test-Path -LiteralPath $AccountPath -PathType Container)) {
+      throw "Accio account not found: $AccountPath. Existing accounts: $($AllAccountNames -join ', ')"
+    }
+    $AccountDirs = @(Get-Item -LiteralPath $AccountPath)
   } else {
-    $AccountDirs = @(Get-ChildItem -LiteralPath $AccountsRoot -Directory | Where-Object { $_.Name -ne "guest" } | Sort-Object Name)
+    $AccountDirs = @($AllAccountDirs | Where-Object { $_.Name -ne "guest" })
   }
 
   if ($AccountDirs.Count -eq 0) {
-    throw "No non-guest Accio account found under: $AccountsRoot"
+    throw "No non-guest Accio account found under: $AccountsRoot. Open Accio and sign in with the target user, then run the installer again."
   }
+
+  $TargetAccountNames = @($AccountDirs | ForEach-Object { $_.Name })
+  Write-Host "Target Accio accounts: $($TargetAccountNames -join ', ')"
+  Write-Host "Default model: $AccioModelDisplayName ($AccioModelProvider/$AccioModelName)"
 
   $TotalAgents = 0
   foreach ($AccountDir in $AccountDirs) {
@@ -302,24 +350,39 @@ function Register-AccioTeam($InstalledTeamDir, $TeamCode, $TeamDisplay) {
     }
     Write-TeamConversation $AccountDir $TeamCode $TeamDisplay $InstalledTeamDir $Members
     Write-Host "Registered Accio account: $($AccountDir.Name)"
+    Write-Host "Agent profile root: $(Join-Path $AccountDir.FullName 'agents')"
+    $TeamConversationPath = Join-Path (Join-Path (Join-Path $AccountDir.FullName "conversations") "team") ("CID-AT-" + $TeamCode + ".jsonc")
+    Write-Host "Team conversation: $TeamConversationPath"
   }
 
   Write-Host "Registered Accio agents: $TotalAgents"
+  Write-Host "If agents are not visible in Accio, restart Accio and confirm the signed-in account id is listed above."
 }
 
 if (-not $SourceRoot) {
   $TempName = "accio-agent-teams-" + (Get-Date -Format "yyyyMMddHHmmss") + "-" + (Get-Random)
   $TempDir = Join-Path $env:TEMP $TempName
   New-Item -ItemType Directory -Path $TempDir -Force | Out-Null
-  $Archive = Join-Path $TempDir "repo.zip"
-  Invoke-WebRequest -Uri $RepoArchiveUrl -OutFile $Archive
-  Expand-Archive -LiteralPath $Archive -DestinationPath $TempDir -Force
+  $Archive = Join-Path $TempDir "repo.tar.gz"
+  Invoke-WebRequest -UseBasicParsing -Uri $RepoArchiveUrl -OutFile $Archive
+  $Tar = Get-Command tar.exe -ErrorAction SilentlyContinue
+  if (-not $Tar) {
+    throw "tar.exe not found. Windows 10 1803+ includes tar.exe. Update Windows, or install from a local cloned source with -SourceRoot."
+  }
+  & tar.exe -xzf $Archive -C $TempDir
+  if ($LASTEXITCODE -ne 0) {
+    throw "Failed to extract repository archive with tar.exe. Archive: $Archive"
+  }
   $SourceRoot = Get-ChildItem -LiteralPath $TempDir -Directory | Select-Object -First 1 -ExpandProperty FullName
 }
 
 $TeamSrc = Join-Path $SourceRoot "packages\$Team"
 if (-not (Test-Path -LiteralPath $TeamSrc -PathType Container)) {
   throw "Team source not found: $TeamSrc"
+}
+
+if (-not $PackageOnly) {
+  Assert-AccioAccountsReady
 }
 
 if ($AccioTeamRoot) {

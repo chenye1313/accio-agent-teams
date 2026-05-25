@@ -7,6 +7,9 @@ ACCIO_AGENT_READY_ROOT="${ACCIO_AGENT_READY_ROOT:-}"
 ACCIO_TEAM_ROOT="${ACCIO_TEAM_ROOT:-}"
 ACCIO_HOME="${ACCIO_HOME:-$HOME/.accio}"
 ACCIO_ACCOUNT_ID="${ACCIO_ACCOUNT_ID:-}"
+ACCIO_MODEL_PROVIDER="${ACCIO_MODEL_PROVIDER:-accio}"
+ACCIO_MODEL_NAME="${ACCIO_MODEL_NAME:-1Nova-bW7yT4kL9pN2}"
+ACCIO_MODEL_DISPLAY_NAME="${ACCIO_MODEL_DISPLAY_NAME:-DeepSeek V4 Pro}"
 SOURCE_ROOT=""
 PACKAGE_ONLY=0
 
@@ -49,6 +52,37 @@ clean_role_display_name() {
   fi
 
   printf '%s' "$cleaned"
+}
+
+preflight_accio_accounts() {
+  local accounts_root="$ACCIO_HOME/accounts"
+  if [[ ! -d "$accounts_root" ]]; then
+    printf 'Accio accounts not found: %s\n' "$accounts_root" >&2
+    printf 'Open Accio and sign in once, then run the installer again.\n' >&2
+    exit 1
+  fi
+
+  if [[ -n "$ACCIO_ACCOUNT_ID" ]]; then
+    if [[ ! -d "$accounts_root/$ACCIO_ACCOUNT_ID" ]]; then
+      printf 'Accio account not found: %s\n' "$accounts_root/$ACCIO_ACCOUNT_ID" >&2
+      printf 'Existing accounts:' >&2
+      local existing_account_dir
+      while IFS= read -r existing_account_dir; do
+        printf ' %s' "$(basename "$existing_account_dir")" >&2
+      done < <(find "$accounts_root" -mindepth 1 -maxdepth 1 -type d | sort)
+      printf '\n' >&2
+      exit 1
+    fi
+    return
+  fi
+
+  local non_guest_count
+  non_guest_count="$(find "$accounts_root" -mindepth 1 -maxdepth 1 -type d ! -name guest | wc -l | tr -d ' ')"
+  if [[ "$non_guest_count" -eq 0 ]]; then
+    printf 'No non-guest Accio account found under: %s\n' "$accounts_root" >&2
+    printf 'Open Accio and sign in with the target user, then run the installer again.\n' >&2
+    exit 1
+  fi
 }
 
 register_role_as_agent() {
@@ -158,8 +192,9 @@ EOF
   "description": "$(json_escape "$display_name from $team_display. Installed from GitHub package $TEAM.")",
   "vibe": "expert",
   "model": {
-    "provider": "auto",
-    "name": "auto"
+    "provider": "$(json_escape "$ACCIO_MODEL_PROVIDER")",
+    "name": "$(json_escape "$ACCIO_MODEL_NAME")",
+    "displayName": "$(json_escape "$ACCIO_MODEL_DISPLAY_NAME")"
   },
   "defaultProject": {
     "dir": "$(json_escape "$project_dir")"
@@ -267,24 +302,56 @@ register_accio_team() {
     exit 1
   fi
 
+  local all_account_dirs=()
   local account_dirs=()
+  printf 'Accio home: %s\n' "$ACCIO_HOME"
+  printf 'Accio accounts root: %s\n' "$accounts_root"
+  while IFS= read -r account_dir; do
+    all_account_dirs+=("$account_dir")
+  done < <(find "$accounts_root" -mindepth 1 -maxdepth 1 -type d | sort)
+  printf 'Accio accounts found:'
+  if [[ "${#all_account_dirs[@]}" -eq 0 ]]; then
+    printf ' none'
+  else
+    for account_dir in "${all_account_dirs[@]}"; do
+      printf ' %s' "$(basename "$account_dir")"
+    done
+  fi
+  printf '\n'
+
   if [[ -n "$ACCIO_ACCOUNT_ID" ]]; then
     account_dirs+=("$accounts_root/$ACCIO_ACCOUNT_ID")
   else
-    while IFS= read -r account_dir; do
+    for account_dir in "${all_account_dirs[@]}"; do
+      [[ "$(basename "$account_dir")" == "guest" ]] && continue
       account_dirs+=("$account_dir")
-    done < <(find "$accounts_root" -mindepth 1 -maxdepth 1 -type d ! -name guest | sort)
+    done
   fi
 
   if [[ "${#account_dirs[@]}" -eq 0 ]]; then
     printf 'No non-guest Accio account found under: %s\n' "$accounts_root" >&2
     exit 1
   fi
+  printf 'Target Accio accounts:'
+  for account_dir in "${account_dirs[@]}"; do
+    printf ' %s' "$(basename "$account_dir")"
+  done
+  printf '\n'
+  printf 'Default model: %s (%s/%s)\n' "$ACCIO_MODEL_DISPLAY_NAME" "$ACCIO_MODEL_PROVIDER" "$ACCIO_MODEL_NAME"
 
   local total_agents=0
   for account_dir in "${account_dirs[@]}"; do
     if [[ ! -d "$account_dir" ]]; then
       printf 'Accio account not found: %s\n' "$account_dir" >&2
+      printf 'Existing accounts:' >&2
+      if [[ "${#all_account_dirs[@]}" -eq 0 ]]; then
+        printf ' none' >&2
+      else
+        for existing_account_dir in "${all_account_dirs[@]}"; do
+          printf ' %s' "$(basename "$existing_account_dir")" >&2
+        done
+      fi
+      printf '\n' >&2
       exit 1
     fi
     mkdir -p "$account_dir/agents" "$account_dir/conversations/team"
@@ -297,9 +364,12 @@ register_accio_team() {
     write_team_conversation "$account_dir" "$team_code" "$team_display" "$installed_team_dir" "$members_file"
     rm -f "$members_file"
     printf 'Registered Accio account: %s\n' "$(basename "$account_dir")"
+    printf 'Agent profile root: %s\n' "$account_dir/agents"
+    printf 'Team conversation: %s\n' "$account_dir/conversations/team/CID-AT-${team_code}.jsonc"
   done
 
   printf 'Registered Accio agents: %s\n' "$total_agents"
+  printf 'If agents are not visible in Accio, restart Accio and confirm the signed-in account id is listed above.\n'
 }
 
 while [[ $# -gt 0 ]]; do
@@ -378,6 +448,10 @@ TEAM_SRC="$SOURCE_ROOT/packages/$TEAM"
 if [[ ! -d "$TEAM_SRC" ]]; then
   printf 'Team source not found: %s\n' "$TEAM_SRC" >&2
   exit 1
+fi
+
+if [[ "$PACKAGE_ONLY" -eq 0 ]]; then
+  preflight_accio_accounts
 fi
 
 if [[ -n "$ACCIO_TEAM_ROOT" ]]; then
