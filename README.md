@@ -2,6 +2,26 @@
 
 本仓库用于发布可安装的 Accio Team 包。
 
+仓库地址：
+
+```text
+https://github.com/chenye1313/accio-agent-teams
+```
+
+## 发给别人怎么说
+
+如果你要让别人帮你安装，不要只发一句口头描述。直接复制下面这段给对方：
+
+```text
+请打开这个 GitHub 仓库：
+https://github.com/chenye1313/accio-agent-teams
+
+如果你是 Windows 电脑，请在 cmd.exe 里复制 README 的 Windows CMD 命令。
+如果你是 Mac 电脑，请在 Terminal 里复制 README 的 macOS / Linux 命令。
+
+不要把中文说明粘进命令行，只复制代码块里的命令。
+```
+
 当前包含两个 Team：
 
 | Team key | Team 名称 | 说明 |
@@ -10,6 +30,10 @@
 | `enterprise-knowledge-assets-team` | 企业知识资产中心Team | 企业资料接收、脱敏、四库构建、质量分发和回流 Team |
 
 ## 一键安装
+
+Mac 和 Windows 必须分开，因为两边的终端、引号和脚本执行方式不同。不要把 Mac 命令拿到 Windows 执行，也不要把 Windows 命令拿到 Mac 执行。
+
+完整安装说明见 [安装说明](INSTALL.md)。
 
 macOS / Linux：
 
